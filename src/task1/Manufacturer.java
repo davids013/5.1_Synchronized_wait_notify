@@ -97,7 +97,7 @@ public class Manufacturer {
 */
         stock += numOfGoods;
         System.out.println(COLOR + "Производитель изготовил " + numOfGoods + " авто (в наличии " + stock + ")");
-        notify();
+        notifyAll();
     }
 
     public synchronized void supply() {
