@@ -1,4 +1,8 @@
-package task1;
+package task2;
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Manufacturer {
     private final String COLOR = "\u001b[35m";
@@ -9,9 +13,13 @@ public class Manufacturer {
     private int supplyDelay = 500;
     private int stock;
     private int sold;
+    private final Lock locker;
+    private final Condition condition;
 
-    public Manufacturer(int stock) {
-        this.stock = stock;
+    public Manufacturer() {
+        stock = 0;
+        locker = new ReentrantLock(true);
+        condition = locker.newCondition();
         targetSales = 1;
         regularSupply();
     }
@@ -53,42 +61,40 @@ public class Manufacturer {
         t.start();
     }
 
-    public synchronized void sell(int request) {
-        System.out.println(COLOR + "У производителя запросили " + request + " авто");
+    public void sell(int request) {
         try {
+            locker.lock();
+            System.out.println(COLOR + "У производителя запросили " + request + " авто");
             Thread.sleep(REQUEST_DELAY);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if (stock >= request) {
-            try {
+            if (stock >= request) {
                 Thread.sleep(SELL_DELAY);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            stock -= request;
-            sold += request;
-            System.out.println(COLOR + "Производитель продал " + request + " авто (осталось " + stock + ")");
-        } else {
-            while (stock < request) {
-                try {
+            } else {
+                while (stock < request) {
                     System.out.println(COLOR + "У производителя недостаточно авто (в наличии " + stock + ")");
-//                    new Thread(() -> supply(2)).start();
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    //                    new Thread(() -> supply(2)).start();
+                    condition.await();
                 }
             }
             stock -= request;
             sold += request;
+            System.out.println(COLOR + "Производитель продал " + request + " авто (осталось " + stock + ")");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            locker.unlock();
         }
     }
 
-    public synchronized void supply(int numOfGoods) {
-        System.out.println(COLOR + "Запущено производство " + numOfGoods + " авто");
-        stock += numOfGoods;
-        System.out.println(COLOR + "Производитель изготовил " + numOfGoods + " авто (в наличии " + stock + ")");
-        notifyAll();
+    private void supply(int numOfGoods) {
+        try {
+            locker.lock();
+            System.out.println(COLOR + "Запущено производство " + numOfGoods + " авто");
+            stock += numOfGoods;
+            System.out.println(COLOR + "Производитель изготовил " + numOfGoods + " авто (в наличии " + stock + ")");
+            condition.signalAll();
+        } finally {
+            locker.unlock();
+        }
     }
 
     public void supply() {

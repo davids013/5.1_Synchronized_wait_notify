@@ -1,4 +1,4 @@
-package task1;
+package task2;
 
 public class Customer {
     private final String COLOR = "\u001b[32m";
