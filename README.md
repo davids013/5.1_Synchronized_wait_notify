@@ -1,8 +1,8 @@
 ## Домашнее задание к занятию 1.2 Работа с синхронизацией. Synchronized блоки. Методы wait, notify, sleep. Интерфейс lock.
 
-1. [Автосалон](./task1/README.md);
-2. [Продвинутый автосалон *](./task2/README.md);
-2. [Ресторан *](./task3/README.md);
+1. [Автосалон](./src/task1/README.md);
+2. [Продвинутый автосалон *](./src/task2/README.md);
+2. [Ресторан ***](./src/task3/README.md);
 
 =======
 
