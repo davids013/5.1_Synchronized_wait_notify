@@ -11,10 +11,10 @@ public class Main_task1 {
     private static final int    SUPPLY_DELAY = 800;
     private static final int    THREADS = 4;
     private static final String COLOR = "\u001b[0m";
+    private static final ExecutorService pool = Executors.newFixedThreadPool(THREADS);
 
     public static void main(String[] args) {
         System.out.println(COLOR + "\n\tЗадача 1. Автосалон (стандартные средства синхронизации)");
-        final ExecutorService pool = Executors.newFixedThreadPool(THREADS);
         final Manufacturer m =
                 new Manufacturer(0)
                         .setSupplyDelay(SUPPLY_DELAY)
@@ -45,9 +45,11 @@ public class Main_task1 {
 */
         for (int i = 0; i < TARGET_SALES; i++) {
             Customer nc = customers.get((int) (Math.random() * NUM_OF_CUSTOMERS));
-            pool.submit(new Thread(null, nc::buy), "Покупатель " + nc.getId());
+            pool.submit(new Thread(null, nc::buy), "Покупатель " + nc.getID());
         }
 //        mt.setDaemon(true);
         pool.shutdown();
     }
+
+    public static ExecutorService getPool() { return pool; }
 }

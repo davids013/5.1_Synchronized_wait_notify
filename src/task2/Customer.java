@@ -3,33 +3,31 @@ package task2;
 public class Customer {
     private final String COLOR = "\u001b[32m";
     private static int counter;
-    private final int id;
+    private final int ID;
     private int garageSize = 0;
     private final Manufacturer targetManufacturer;
 
     public Customer(Manufacturer manufacturer) {
-        counter += 1;
-        id = counter;
+        ID = ++counter;
         targetManufacturer = manufacturer;
-        System.out.println(COLOR + "В автосалоне новый покупатель " + id);
+        System.out.println(COLOR + "В автосалоне новый покупатель " + ID);
     }
 
     public int getGarageSize() { return garageSize; }
 
-    public int getId() { return id; }
+    public int getID() { return ID; }
 
-    public boolean buy(int request) {
-        System.out.println(COLOR + "Покупатель " + id + " хочет купить " + request + " авто");
+    public void buy(int request) {
+        System.out.println(COLOR + "Покупатель " + ID + " хочет купить " + request + " авто");
         if (targetManufacturer.getStock() < request) {
-            System.out.println(COLOR + "Покупатель " + id + " ожидает поставки");
+            System.out.println(COLOR + "Покупатель " + ID + " ожидает поставки");
         }
         targetManufacturer.sell(request);
         garageSize += request;
-        System.out.println(COLOR + "Покупатель " + id + " приобрёл " + request + " авто (в гараже " + garageSize + ")");
-        return true;
+        System.out.println(COLOR + "Покупатель " + ID + " приобрёл " + request + " авто (в гараже " + garageSize + ")");
     }
 
-    public boolean buy() {
-        return buy(1);
+    public void buy() {
+        buy(1);
     }
 }
