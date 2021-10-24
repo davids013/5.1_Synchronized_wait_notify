@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 public class Main_task2 {
     private static final int    NUM_OF_CUSTOMERS = 5;
-    public static final int    TARGET_SALES = 10;
+    public static final int     TARGET_SALES = 10;
     private static final int    SUPPLY_DELAY = 800;
     private static final int    THREADS = 4;
     private static final String RESET_COLOR = "\u001b[0m";

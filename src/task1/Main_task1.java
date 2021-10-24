@@ -23,31 +23,10 @@ public class Main_task1 {
         for (int i = 0; i < NUM_OF_CUSTOMERS; i++) {
             customers.add(new Customer(m));
         }
-/*
-        Thread mt = new Thread(
-                null,
-                () -> {
-                    while (m.getSold() < TARGET_SALES) {
-//                        if (m.getStock() < 1) {
-//                            System.out.println("\u001b[36m" + "МАЛО В НАЛИЧИИ");
-                            m.supply();
-//                        };
-                        try {
-                            Thread.sleep(SUPPLY_DELAY);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        System.out.println("\u001b[36m" + "Продано " + m.getSold());
-                    }
-                    System.out.println("\u001b[36m" + "Объём продаж выполнен");
-                },
-                "Производитель");
-*/
         for (int i = 0; i < TARGET_SALES; i++) {
             Customer nc = customers.get((int) (Math.random() * NUM_OF_CUSTOMERS));
             pool.submit(new Thread(null, nc::buy), "Покупатель " + nc.getID());
         }
-//        mt.setDaemon(true);
         pool.shutdown();
     }
 

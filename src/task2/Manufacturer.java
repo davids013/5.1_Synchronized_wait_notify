@@ -45,9 +45,7 @@ public class Manufacturer {
                 null,
                 () -> {
                     while (sold < targetSales) {
-//                        if (m.getStock() < 1) {
                         supply();
-//                        };
                         try {
                             Thread.sleep(supplyDelay);
                         } catch (InterruptedException e) {
@@ -71,7 +69,6 @@ public class Manufacturer {
             } else {
                 while (stock < request) {
                     System.out.println(COLOR + "У производителя недостаточно авто (в наличии " + stock + ")");
-                    //                    new Thread(() -> supply(2)).start();
                     condition.await();
                 }
             }
