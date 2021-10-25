@@ -9,8 +9,8 @@ public class Restaurant {
     private final int CHOOSE_TIME = 500;
     private final Collection<Waiter> waiters;
     private final Collection<Client> clients;
-    private final String COLOR = "\u001b[36m";
-    private int served;
+    protected static final String COLOR = "\u001b[36m";
+    private volatile int served;
 
     public Restaurant(int staffSize, int targetClients) {
         STAFF_SIZE = staffSize;
@@ -41,7 +41,7 @@ public class Restaurant {
         clients.remove(client);
         System.out.println(COLOR + client + " расплатился и ушёл. Обслужено " + served + " посетителей");
         if (served >= TARGET_CLIENTS && (clients.size() == 0 || "[]".equals(clients.toString())))
-            System.out.println(COLOR + "Ресторан закрывается");
+            System.out.println(COLOR + "Ресторан закрывается. Персонал собирается домой");
     }
 
     public Waiter callWaiter(Client client) {

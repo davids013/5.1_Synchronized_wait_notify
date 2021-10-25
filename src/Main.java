@@ -1,5 +1,6 @@
 import task1.Main_task1;
 import task2.Main_task2;
+import task2v2.Main_task2v2;
 import task3.Main_task3;
 
 public class Main {
@@ -16,6 +17,10 @@ public class Main {
         Thread.sleep(INTERTASK_DELAY);
         Main_task2.main(null);
         while (!Main_task2.getPool().isTerminated());
+
+        Thread.sleep(INTERTASK_DELAY);
+        Main_task2v2.main(null);
+        while (!Main_task2v2.getPool().isTerminated());
 
         Thread.sleep(INTERTASK_DELAY);
         Main_task3.main(null);

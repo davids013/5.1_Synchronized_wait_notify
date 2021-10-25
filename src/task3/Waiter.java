@@ -4,7 +4,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Waiter {
-    private static final String COLOR = "\u001b[32m";
+    private static final String COLOR = "\u001b[35m";
     private static final int TAKE_ORDER_TIME = 200;
     private static final int DELIVERY_TIME = 500;
     private static final int COOK_TIME = 1_500;
@@ -43,7 +43,7 @@ public class Waiter {
         try {
             Thread.sleep(TAKE_ORDER_TIME + (int) (Math.random() * 10));
             client.setOrdered(true);
-            System.out.println(COLOR + "Повар готовит заказ для посетителя " + client.getID());
+            System.out.println(Restaurant.COLOR + "Повар готовит заказ для посетителя " + client.getID());
             Thread.sleep(COOK_TIME + (int) (Math.random() * 10));
         } catch (InterruptedException e) {
             e.printStackTrace();

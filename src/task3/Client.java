@@ -9,7 +9,7 @@ public class Client {
     private static int counter;
     private final int ID;
     private final int EAT_DELAY = 2_000;
-    public static final String COLOR = "\u001b[31m";
+    public static final String COLOR = "\u001b[32m";
     private boolean isOrdered;
     private boolean isReadyToOrder;
     private Waiter waiter;
